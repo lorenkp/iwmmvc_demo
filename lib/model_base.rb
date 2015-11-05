@@ -1,9 +1,14 @@
-require 'pry-byebug'
 require 'pg'
 require 'active_support/inflector'
 
+# Database = PG::Connection.open(:dbname => 'mvc')
 
-Database = PG::Connection.open(:dbname => 'mvc')
+Database = PG::Connection.open(host: 'ec2-107-21-221-59.compute-1.amazonaws.com',
+                               dbname: 'de8khgpvn6f9e',
+                               port: 5432,
+                               password: 'KtENQfogvyPRDC-IdkfzSgVnRC',
+                               user: 'ddgdbhyinirsoj'
+                              )
 
 class ModelBase
   def initialize(params)
@@ -127,14 +132,5 @@ class ModelBase
     parse_all(results)
   end
 end
-
-class Users < ModelBase
-end
-
-Users.make_column_attr_accessors!
-loren = Users.find(1)
-loren.first = 'kwan'
-loren.save
-binding.pry
 
 
