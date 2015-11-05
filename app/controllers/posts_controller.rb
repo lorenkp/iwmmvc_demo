@@ -1,6 +1,5 @@
 require_relative '../../lib/controller_base'
 require_relative '../models/post'
-require 'byebug'
 
 class PostsController < ControllerBase
   def create
