@@ -1,6 +1,29 @@
-<h1>Create a Post</h1>
-<form action="/post" method="POST">
-    <input class="form-control" name="post[title]" placeholder="Title">
-    <input class="form-control" name="post[body]" placeholder="Body">
-    <button type="submit" class="btn btn-default">Submit</button>
-</form>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>I Want My MVC</title>
+    <link rel="stylesheet" href="/stylesheet.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+            <div>
+                <h1>Post</h1>
+            </div>
+            <form action="/post" method="POST">
+                <input class="form-control" name="post[title]" placeholder="Title">
+                <br>
+                <textarea class="form-control" name="post[body]" rows="6" placeholder="Body"></textarea>
+                <br>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

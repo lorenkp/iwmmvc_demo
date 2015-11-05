@@ -3,6 +3,7 @@
 require 'webrick'
 require_relative '../lib/router'
 require_relative '../app/controllers/posts_controller'
+require_relative '../app/controllers/stylesheets_controller'
 
 router = Router.new
 router.draw do
@@ -10,6 +11,7 @@ router.draw do
   get Regexp.new('^/$'), PostsController, :index
   get Regexp.new("^/post/new$"), PostsController, :new
   post Regexp.new("^/post$"), PostsController, :create
+  get Regexp.new("^/stylesheet.css$"), StylesheetsController, :stylesheet
 end
 
 PORT = ARGV[0] || 3000
