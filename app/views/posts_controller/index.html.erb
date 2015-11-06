@@ -7,6 +7,7 @@
     <title>I Want My MVC</title>
     <link rel="stylesheet" href="/stylesheet.css">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -28,6 +29,13 @@
                         </h2>
                             </a>
                             <p class="post-meta">Posted on September 24, 2014</p>
+                            <a href="/post/<%= post.id %>/edit">
+                                <i class="fa fa-pencil-square-o"></i>
+                            </a>
+                            <form style="display:inline-block;" class="form-inline" action="post/<%= post.id %>" method="GET" accept-charset="utf-8">
+                                <input type="hidden" name="post[delete]" value="true">
+                                <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                            </form>
                         </div>
                         <hr>
                         <% end %>

@@ -7,11 +7,12 @@ require_relative '../app/controllers/stylesheets_controller'
 
 router = Router.new
 router.draw do
-  # Routes are drawn here. For example, to get the index of users:
+  get Regexp.new('^/post/\d+$'), PostsController, :show
+  get Regexp.new('^/post/\d+/edit$'), PostsController, :edit
+  get Regexp.new("^/stylesheet.css$"), StylesheetsController, :stylesheet
   get Regexp.new('^/$'), PostsController, :index
   get Regexp.new("^/post/new$"), PostsController, :new
   post Regexp.new("^/post$"), PostsController, :create
-  get Regexp.new("^/stylesheet.css$"), StylesheetsController, :stylesheet
 end
 
 PORT = ARGV[0] || 3000

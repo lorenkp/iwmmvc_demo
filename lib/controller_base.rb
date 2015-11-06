@@ -38,8 +38,6 @@ class ControllerBase
     filename = File.dirname(__FILE__) +
       "/../app/views/#{self.class.to_s.underscore}/#{template_name}.html.erb"
     erb_file = ERB.new(File.read(filename))
-
-    # The result method executes the erb, i.e., file.html.erb => file.html
     render_template(erb_file.result(binding), 'text/html')
   end
 
