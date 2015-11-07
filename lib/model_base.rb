@@ -32,10 +32,10 @@ class ModelBase
   def self.columns
     return @columns if @columns
     cols = Database.exec(<<-SQL)
-    SELECT
-    *
-    FROM
-    #{table_name}
+      SELECT
+        *
+      FROM
+        #{table_name}
     SQL
     @columns = cols.fields.map(&:to_sym)
   end
@@ -55,7 +55,7 @@ class ModelBase
   def self.all
     query_hash = Database.exec(<<-SQL)
       SELECT
-        #{table_name}.*
+        *
       FROM
         #{table_name}
       ORDER BY
@@ -66,14 +66,6 @@ class ModelBase
 
   def self.parse_all(query_hash)
     query_hash.map { |entry| new(entry) }
-  end
-
-  def attributes
-    @attributes ||= {}
-  end
-
-  def attribute_values
-    attributes.values
   end
 
   def self.find(id)
@@ -93,14 +85,17 @@ class ModelBase
   end
 
   def self.where(params)
-    where_line = params.keys.map.with_index(1) { |key, idx| key.to_s + " = $#{idx}" }.join(' AND ')
+    where_line = params.keys
+                 .map
+                 .with_index(1) { |key, idx| key.to_s + " = $#{idx}" }
+                 .join(' AND ')
     results = Database.exec(<<-SQL, params.values)
-    SELECT
-    *
-    FROM
-    #{table_name}
-    WHERE
-    #{where_line}
+      SELECT
+        *
+      FROM
+        #{table_name}
+      WHERE
+        #{where_line}
     SQL
     parse_all(results)
   end
@@ -117,7 +112,12 @@ class ModelBase
 
   private
 
+  def attributes
+    @attributes ||= {}
+  end
+
   def insert
+    @attributes[:created_at] = Time.now
     col_names = self.class.columns.drop(1).map(&:to_s).join(', ')
     vals = (1..self.class.columns.length - 1)
            .to_a.map { |el| '$' + el.to_s }.join(', ')
@@ -129,7 +129,7 @@ class ModelBase
      RETURNING
      id
      SQL
-     id = insertion[0]['id']
+     self.id = insertion[0]['id']
   end
 
  def update
@@ -145,7 +145,7 @@ class ModelBase
      SET
       #{set_line.join(', ')}
      WHERE
-      id = #{id}
+      id = #{self.id}
      SQL
  end
 end

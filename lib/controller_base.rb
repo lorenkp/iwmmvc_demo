@@ -15,7 +15,7 @@ class ControllerBase
   end
 
   def redirect_to(url)
-    raise 'already rendered' if already_built_response?
+    fail 'already rendered' if already_built_response?
     res.status = 302
     res['Location'] = url
     @already_built_response = true
@@ -27,7 +27,7 @@ class ControllerBase
   end
 
   def render_template(content, content_type)
-    raise 'already rendered' if already_built_response?
+    fail 'already rendered' if already_built_response?
     res.content_type = content_type
     res.body = content
     @already_built_response = true
@@ -36,7 +36,7 @@ class ControllerBase
 
   def render(template_name)
     filename = File.dirname(__FILE__) +
-      "/../app/views/#{self.class.to_s.underscore}/#{template_name}.html.erb"
+               "/../app/views/#{self.class.to_s.underscore}/#{template_name}.html.erb"
     erb_file = ERB.new(File.read(filename))
     render_template(erb_file.result(binding), 'text/html')
   end

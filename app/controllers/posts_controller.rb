@@ -16,10 +16,6 @@ class PostsController < ControllerBase
   def new
   end
 
-  def post_id
-    req.path.scan(/\d+/)[0]
-  end
-
   def show
     return destroy if params['post'] && params['post']['delete']
     @post = Post.find(post_id)
@@ -37,9 +33,15 @@ class PostsController < ControllerBase
 
   private
 
+  def post_id
+    req.path.scan(/\d+/)[0]
+  end
+
   def patch
-    @post= Post.new(post_params)
-    @post.id = params['post']['edit']
+    @post = Post.new(post_params)
+    id = params['post']['edit']
+    @post.id = id
+    @post.created_at = Post.find(id).created_at
     @post.save
     redirect_to('/')
   end
