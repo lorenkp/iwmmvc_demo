@@ -3,7 +3,7 @@ require_relative '../models/post'
 
 class PostsController < ControllerBase
   def create
-    return edit if params['post']['edit']
+    return patch if params['post']['edit']
     @post = Post.new(post_params)
     @post.save
     redirect_to('/')
@@ -32,12 +32,17 @@ class PostsController < ControllerBase
   end
 
   def edit
-    @post = Post.new(post_params.merge(:id => params['post']['edit']))
-    @post.save
-    redirect_to('/')
+    @post = Post.find(post_id)
   end
 
   private
+
+  def patch
+    @post= Post.new(post_params)
+    @post.id = params['post']['edit']
+    @post.save
+    redirect_to('/')
+  end
 
   def post_params
     {
