@@ -121,7 +121,7 @@ class ModelBase
     col_names = self.class.columns.drop(1).map(&:to_s).join(', ')
     vals = (1..self.class.columns.length - 1)
            .to_a.map { |el| '$' + el.to_s }.join(', ')
-    insertion = Database.exec_params(<<-SQL, attribute_values)
+    insertion = Database.exec_params(<<-SQL, @attributes.values)
     INSERT INTO
     #{self.class.table_name} (#{col_names})
     VALUES
