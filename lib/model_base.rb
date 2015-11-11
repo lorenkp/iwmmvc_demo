@@ -1,14 +1,15 @@
 require 'pg'
 require 'active_support/inflector'
+require 'pry-byebug'
 
-# Database = PG::Connection.open(:dbname => 'mvc')
+Database = PG::Connection.open(:dbname => 'mvc')
 
-Database = PG::Connection.open(host: 'ec2-107-21-221-59.compute-1.amazonaws.com',
-                               dbname: 'de8khgpvn6f9e',
-                               port: 5432,
-                               password: 'KtENQfogvyPRDC-IdkfzSgVnRC',
-                               user: 'ddgdbhyinirsoj'
-                              )
+# Database = PG::Connection.open(host: 'ec2-107-21-221-59.compute-1.amazonaws.com',
+#                                dbname: 'de8khgpvn6f9e',
+#                                port: 5432,
+#                                password: 'KtENQfogvyPRDC-IdkfzSgVnRC',
+#                                user: 'ddgdbhyinirsoj'
+#                               )
 
 class ModelBase
   def initialize(params)
@@ -16,17 +17,17 @@ class ModelBase
       if self.class.columns.include?(key.to_sym)
         send((key.to_s + '=').to_sym, val)
       else
-        fail("unknown attribute #{key}")
+        fail("unknown attribute '#{key}'")
       end
     end
   end
 
   def self.table_name
-    @@table_name ||= name.tableize
+    @table_name ||= self.name.tableize
   end
 
   def self.table_name=(name)
-    @@table_name = name
+    @table_name = name
   end
 
   def self.columns
@@ -110,25 +111,52 @@ class ModelBase
     nil
   end
 
+  def self.belongs_to(name, options = {})
+    assocations_hash[name] = BelongsTo.new(name, options)
+    define_method(name) do
+      association = self.class.associations_hash[name]
+      association.model_class.where(:id => association.foreign_key)[0]
+    end
+  end
+
+  def self.has_many(name, options = {})
+    associations_hash[name] = HasMany.new(name, self.name, options)
+    define_method(name) do
+      association = self.class.associations_hash[name]
+      association.model_class.where(association.foreign_key => self.id)
+    end
+  end
+
+
   private
+
+  def self.associations_hash
+    @associations ||= {}
+  end
 
   def attributes
     @attributes ||= {}
   end
 
   def insert
+    insert_attributes = []
+    col_names = []
     @attributes[:created_at] = Time.now
-    col_names = self.class.columns.drop(1).map(&:to_s).join(', ')
+    # postgres will provide the id, upon insertion
+    self.class.columns.reject { |el| el == :id }.each do |col|
+      insert_attributes << attributes[col]
+      col_names << col.to_s
+    end
     vals = (1..self.class.columns.length - 1)
            .to_a.map { |el| '$' + el.to_s }.join(', ')
-    insertion = Database.exec_params(<<-SQL, @attributes.values)
-    INSERT INTO
-    #{self.class.table_name} (#{col_names})
-    VALUES
-    (#{vals})
-     RETURNING
-     id
-     SQL
+    insertion = Database.exec_params(<<-SQL, insert_attributes)
+      INSERT INTO
+        #{self.class.table_name} (#{col_names.join(', ')})
+      VALUES
+        (#{vals})
+      RETURNING
+       id
+    SQL
      self.id = insertion[0]['id']
   end
 
@@ -146,6 +174,47 @@ class ModelBase
       #{set_line.join(', ')}
      WHERE
       id = #{self.id}
-     SQL
+    SQL
  end
 end
+
+class AssocOptions
+  attr_accessor :foreign_key, :class_name, :primary_key
+
+  def model_class
+    @class_name.constantize
+  end
+end
+
+class BelongsTo < AssocOptions
+  def initialize(name, options = {})
+    @foreign_key = options[:foreign_key] || "#{name}_id".to_sym
+    @primary_key = :id
+    @class_name = options[:class_name] || name.to_s.singularize.camelcase
+  end
+end
+
+class HasMany < AssocOptions
+  def initialize(name, class_name, options = {})
+    @foreign_key = options[:foreign_key] || "#{class_name}_id".to_sym
+    @primary_key = :id
+    @class_name = options[:class_name] || name.to_s.singularize.camelcase
+  end
+end
+
+class Post < ModelBase
+  binding.pry
+  has_many :comments
+  make_column_attr_accessors!
+end
+
+class Comment < ModelBase
+  make_column_attr_accessors!
+end
+
+post = Post.find(9)
+binding.pry
+post.comments
+p 'hello'
+
+
