@@ -129,17 +129,19 @@ class ModelBase
       insert_attributes << attributes[col]
       col_names << col.to_s
     end
-    vals = (1..self.class.columns.length - 1)
-           .to_a.map { |el| '$' + el.to_s }.join(', ')
     insertion = Database.exec_params(<<-SQL, insert_attributes)
       INSERT INTO
         #{self.class.table_name} (#{col_names.join(', ')})
       VALUES
-        (#{vals})
+        (#{val_line})
       RETURNING
        id
     SQL
      self.id = insertion[0]['id']
+  end
+
+  def val_line
+    (1..self.class.columns.length - 1).to_a.map { |el| '$' + el.to_s }.join(', ')
   end
 
  def update
@@ -159,18 +161,3 @@ class ModelBase
     SQL
  end
 end
-
-class Post < ModelBase
-  has_many :comments
-  make_column_attr_accessors!
-end
-
-class Comment < ModelBase
-  belongs_to :post
-  make_column_attr_accessors!
-end
-
-binding.pry
-p 'hello'
-
-

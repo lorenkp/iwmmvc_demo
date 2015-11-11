@@ -21,30 +21,30 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    <%= @post  %>
-                        <% @posts.each do |post| %>
-                            <div class="post-preview">
-                                <a href="post/<%= post.id %>">
-                                    <h2 class="post-title"><%= post.title %></h2>
-                                </a>
-                                <p class="lead">
-                                    <%= post.body %>
-                                </p>
-                                <p class="index-post-date">
-                                    <%= Date.parse(post.created_at).strftime("Posted on %B%e, %Y") %>
-                                </p>
-                                <div>
-                                    <form style="display:inline-block;" action="/post/<%= post.id %>/edit">
-                                        <button type="submit" class="btn btn-default"><i class="fa fa-pencil"></i></button>
-                                    </form>
-                                    <form style="display:inline-block;" class="form-inline" action="post/<%= post.id %>" method="GET" accept-charset="utf-8">
-                                        <input type="hidden" name="post[delete]" value="true">
-                                        <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button>
-                                    </form>
-                                </div>
+                    <% @posts.each do |post| %>
+                        <div class="post-preview">
+                            <a href="post/<%= post.id %>">
+                                <h2 class="post-title"><%= post.title %></h2>
+                            </a>
+                            <p class="lead">
+                                <%= post.body %>
+                            </p>
+                            <p class="index-post-date">
+                                <%= Date.parse(post.created_at).strftime("Posted on %B%e, %Y") %>
+                            </p>
+                            <div style="display:inline-block">
+                                <form style="display:inline-block;" action="/post/<%= post.id %>/edit">
+                                    <button type="submit" class="btn btn-default"><i class="fa fa-pencil"></i></button>
+                                </form>
+                                <form style="display:inline-block;" class="form-inline" action="post/<%= post.id %>" method="GET" accept-charset="utf-8">
+                                    <input type="hidden" name="post[delete]" value="true">
+                                    <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                </form>
                             </div>
-                            <hr>
-                            <% end %>
+                            <a href="/post/<%= post.id %>/comments">Comments</a>
+                        </div>
+                        <hr>
+                    <% end %>
                 </div>
             </div>
         </div>
