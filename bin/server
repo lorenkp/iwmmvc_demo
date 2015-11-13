@@ -3,16 +3,23 @@
 require 'webrick'
 require_relative '../lib/router'
 require_relative '../app/controllers/posts_controller'
+require_relative '../app/controllers/comments_controller'
 require_relative '../app/controllers/stylesheets_controller'
 
 router = Router.new
 router.draw do
-  get Regexp.new('^/post/\d+$'), PostsController, :show
-  get Regexp.new('^/post/\d+/edit$'), PostsController, :edit
-  get Regexp.new("^/stylesheet.css$"), StylesheetsController, :stylesheet
+  get Regexp.new('^/stylesheet.css$'), StylesheetsController, :stylesheet
+
+  get Regexp.new('^/posts/\d+$'), PostsController, :show
+  get Regexp.new('^/posts/\d+/edit$'), PostsController, :edit
   get Regexp.new('^/$'), PostsController, :index
-  get Regexp.new("^/post/new$"), PostsController, :new
-  post Regexp.new("^/post$"), PostsController, :create
+  get Regexp.new('^/posts/new$'), PostsController, :new
+  post Regexp.new('^/posts$'), PostsController, :create
+
+  get Regexp.new('^/post/\d+/comments$'), CommentsController, :index
+  post Regexp.new('^/comments$'), CommentsController, :create
+  get Regexp.new('^/posts/\d+/comments/new$'), CommentsController, :new
+
 end
 
 PORT = ARGV[0] || 3000
