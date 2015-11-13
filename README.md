@@ -1,4 +1,4 @@
-# iwmmvc_demo
+# I Want MY MVC Demo
 
 A site built with the ["I Want My MVC"](https://github.com/lorenkp/i_want_my_mvc) framework, deployed to Heroku. Try it out!
 

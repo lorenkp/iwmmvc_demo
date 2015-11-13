@@ -15,7 +15,7 @@ class CommentsController < ControllerBase
   def create
     @comment = Comment.new(comment_params)
     @comment.save
-    redirect_to("/posts/#{comment_params[:post_id]}/comments")
+    redirect_to("/posts/#{comment_params[:post_id]}")
   end
 
   private

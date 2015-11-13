@@ -19,6 +19,7 @@ class PostsController < ControllerBase
   def show
     return destroy if params['post'] && params['post']['delete']
     @post = Post.find(post_id)
+    @comments = @post.comments
   end
 
   def destroy
