@@ -16,7 +16,7 @@ router.draw do
   get Regexp.new('^/posts/new$'), PostsController, :new
   post Regexp.new('^/posts$'), PostsController, :create
 
-  get Regexp.new('^/post/\d+/comments$'), CommentsController, :index
+  get Regexp.new('^/posts/\d+/comments$'), CommentsController, :index
   post Regexp.new('^/comments$'), CommentsController, :create
   get Regexp.new('^/posts/\d+/comments/new$'), CommentsController, :new
 

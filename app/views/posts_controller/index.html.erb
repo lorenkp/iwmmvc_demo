@@ -15,7 +15,7 @@
         <nav class="navbar navbar-default">
             <div class="container">
                 <a class="navbar-brand" href="">I Want My MVC</a>
-                <a class="btn btn-primary navbar-btn navbar-right" href="/post/new" role="button">Post</a>
+                <a class="btn btn-primary navbar-btn navbar-right" href="/posts/new" role="button">Post</a>
             </div>
         </nav>
         <div class="container">
@@ -23,7 +23,7 @@
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                     <% @posts.each do |post| %>
                         <div class="post-preview">
-                            <a href="post/<%= post.id %>">
+                            <a href="posts/<%= post.id %>">
                                 <h2 class="post-title"><%= post.title %></h2>
                             </a>
                             <p class="lead">
@@ -33,15 +33,15 @@
                                 <%= Date.parse(post.created_at).strftime("Posted on %B%e, %Y") %>
                             </p>
                             <div style="display:inline-block">
-                                <form style="display:inline-block;" action="/post/<%= post.id %>/edit">
+                                <form style="display:inline-block;" action="/posts/<%= post.id %>/edit">
                                     <button type="submit" class="btn btn-default"><i class="fa fa-pencil"></i></button>
                                 </form>
-                                <form style="display:inline-block;" class="form-inline" action="post/<%= post.id %>" method="GET" accept-charset="utf-8">
+                                <form style="display:inline-block;" class="form-inline" action="posts/<%= post.id %>" method="GET" accept-charset="utf-8">
                                     <input type="hidden" name="post[delete]" value="true">
                                     <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button>
                                 </form>
                             </div>
-                            <a href="/post/<%= post.id %>/comments">Comments</a>
+                            <a href="/posts/<%= post.id %>/comments">Comments</a>
                         </div>
                         <hr>
                     <% end %>

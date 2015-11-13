@@ -23,7 +23,7 @@
                 <div class="col-sm-8 col-sm-offset-2">
                     <h1>Edit Post</h1>
                     <br>
-                    <form action="/post" method="POST">
+                    <form action="/posts" method="POST">
                         <input class="form-control" name="post[title]" value="<%= @post.title %>">
                         <br>
                         <textarea class="form-control" name="post[body]" rows="6"><%= @post.body %></textarea>
