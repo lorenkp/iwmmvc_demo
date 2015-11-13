@@ -5,7 +5,7 @@ require_relative '../models/post'
 class CommentsController < ControllerBase
   def index
     @comments = Post.find(post_id).comments
-    @post_id = post_id
+    @post = Post.find(post_id)
   end
 
   def new
