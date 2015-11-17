@@ -44,7 +44,7 @@ class PostsController < ControllerBase
     @post.id = id
     @post.created_at = Post.find(id).created_at
     @post.save
-    redirect_to('/')
+    redirect_to("/posts/#{id}")
   end
 
   def post_params
