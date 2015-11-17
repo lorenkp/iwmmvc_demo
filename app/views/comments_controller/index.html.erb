@@ -10,28 +10,34 @@
 </head>
 
 <body>
-    <div class="container-fluid">
-        <nav class="navbar navbar-default">
-            <div class="container">
-                <a class="navbar-brand" href="/">I Want My MVC Demo</a>
-                <a class="btn btn-primary navbar-btn navbar-right" href="/posts/<%= @post.id %>/comments/new" role="button">Post a Comment</a>
-            </div>
-        </nav>
+    <nav class="navbar navbar-default">
         <div class="container">
-            <div class="row">
-                <div class="col-sm-10 col-sm-offset-1">
+            <a class="navbar-brand" href="/">I Want My MVC Demo</a>
+            <a class="btn btn-primary navbar-btn navbar-right" href="/posts/new" role="button">Post</a>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-10 col-sm-offset-1">
                 <h1>Comments for <a href="/posts/<%=@post.id%>"><%= @post.title %></a></h1>
-                    <br>
-                    <% @comments.each do |comment| %>
-                        <p class="lead">
-                            <%= comment.body %>
-                        </p>
-                        <hr>
+                <br>
+                <% @comments.each do |comment| %>
+                    <p class="lead">
+                        <%= comment.body %>
+                    </p>
+                    <hr>
                     <% end %>
-                </div>
             </div>
         </div>
     </div>
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-text">
+                <a href="https://github.com/lorenkp/iwmmvc_demo">Demo (this page) GitHub</a>
+                <a href="https://github.com/lorenkp/i_want_my_mvc" class="spacing">I Want My MVC Framework Github</a>
+            </p>
+        </div>
+    </footer>
 </body>
 
 </html>
