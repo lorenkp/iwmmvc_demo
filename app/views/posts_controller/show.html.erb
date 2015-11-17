@@ -10,31 +10,38 @@
 </head>
 
 <body>
-    <div class="container-fluid">
-        <nav class="navbar navbar-default">
-            <div class="container">
-                <a class="navbar-brand" href="/">I Want My MVC Demo</a>
-            </div>
-        </nav>
+    <nav class="navbar navbar-default">
         <div class="container">
-            <div class="row">
-                <div class="col-sm-8 col-sm-offset-2">
-                    <h1><%= @post.title %></h1>
-                    <br>
-                    <%= @post.body %>
-                        <hr>
-                        <h3>Comments</h3>
-                        <% @comments.each do |comment| %>
-                            <li>
-                                <%=comment.body %>
-                            </li>
+            <a class="navbar-brand" href="/">I Want My MVC Demo</a>
+            <a class="btn btn-primary navbar-btn navbar-right" href="/posts/new" role="button">Post</a>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+                <h1><%= @post.title %></h1>
+                <br>
+                <%= @post.body %>
+                    <hr>
+                    <h3>Comments</h3>
+                    <% @comments.each do |comment| %>
+                        <li>
+                            <%=comment.body %>
+                        </li>
                         <% end  %>
-                        <br>
-                        <a class="btn btn-primary" href="/posts/<%= @post.id %>/comments/new" role="button">Post a Comment</a>
-                </div>
+                            <br>
+                            <a class="btn btn-primary" href="/posts/<%= @post.id %>/comments/new" role="button">Post a Comment</a>
             </div>
         </div>
     </div>
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-text">
+                <a href="https://github.com/lorenkp/iwmmvc_demo">Demo (this page) GitHub</a>
+                <a href="https://github.com/lorenkp/i_want_my_mvc" class="spacing">I Want My MVC Framework Github</a>
+            </p>
+        </div>
+    </footer>
 </body>
 
 </html>

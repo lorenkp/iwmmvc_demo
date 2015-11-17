@@ -11,44 +11,50 @@
 </head>
 
 <body>
-    <div class="container-fluid">
-        <nav class="navbar navbar-default">
-            <div class="container">
-                <a class="navbar-brand" href="">I Want My MVC Demo</a>
-                <a class="btn btn-primary navbar-btn navbar-right" href="/posts/new" role="button">Post</a>
-            </div>
-        </nav>
+    <nav class="navbar navbar-default">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    <% @posts.each do |post| %>
-                        <div class="post-preview">
-                            <a href="posts/<%= post.id %>">
-                                <h2 class="post-title"><%= post.title %></h2>
-                            </a>
-                            <p class="lead">
-                                <%= post.body %>
-                            </p>
-                            <p>
-                                <%= Date.parse(post.created_at).strftime("Posted on %B %e, %Y") %> &middot;
-                                    <a href="/posts/<%= post.id %>/comments">Comments</a>
-                            </p>
-                            <div>
-                                <form style="display:inline-block;" action="/posts/<%= post.id %>/edit">
-                                    <button type="submit" class="btn btn-default"><i class="fa fa-pencil"></i></button>
-                                </form>
-                                <form style="display:inline-block;" class="form-inline" action="posts/<%= post.id %>" method="GET" accept-charset="utf-8">
-                                    <input type="hidden" name="post[delete]" value="true">
-                                    <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button>
-                                </form>
-                            </div>
+            <a class="navbar-brand" href="">I Want My MVC Demo</a>
+            <a class="btn btn-primary navbar-btn navbar-right" href="/posts/new" role="button">Post</a>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <% @posts.each do |post| %>
+                    <div class="post-preview">
+                        <a href="posts/<%= post.id %>">
+                            <h2 class="post-title"><%= post.title %></h2>
+                        </a>
+                        <p class="lead">
+                            <%= post.body %>
+                        </p>
+                        <p>
+                            <%= Date.parse(post.created_at).strftime("Posted on %B %e, %Y") %> &middot;
+                                <a href="/posts/<%= post.id %>/comments">Comments</a>
+                        </p>
+                        <div>
+                            <form style="display:inline-block;" action="/posts/<%= post.id %>/edit">
+                                <button type="submit" class="btn btn-default"><i class="fa fa-pencil"></i></button>
+                            </form>
+                            <form style="display:inline-block;" class="form-inline" action="posts/<%= post.id %>" method="GET" accept-charset="utf-8">
+                                <input type="hidden" name="post[delete]" value="true">
+                                <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                            </form>
                         </div>
-                        <hr>
-                        <% end %>
-                </div>
+                    </div>
+                    <hr>
+                    <% end %>
             </div>
         </div>
     </div>
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-text">
+                <a href="https://github.com/lorenkp/iwmmvc_demo">Demo (this page) GitHub</a>
+                <a href="https://github.com/lorenkp/i_want_my_mvc" class="spacing">I Want My MVC Framework Github</a>
+            </p>
+        </div>
+    </footer>
 </body>
 
 </html>
