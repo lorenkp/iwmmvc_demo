@@ -18,3 +18,11 @@
 footer a {
   color: #777 !important;
 }
+
+.inline-block {
+  display: inline-block;
+}
+
+.float-right {
+  float: right;
+}

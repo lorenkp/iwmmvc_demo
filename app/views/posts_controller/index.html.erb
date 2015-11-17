@@ -28,18 +28,20 @@
                         <p class="lead">
                             <%= post.body %>
                         </p>
-                        <p>
-                            <%= Date.parse(post.created_at).strftime("Posted on %B %e, %Y") %> &middot;
-                                <a href="/posts/<%= post.id %>/comments">Comments</a>
-                        </p>
                         <div>
-                            <form style="display:inline-block;" action="/posts/<%= post.id %>/edit">
-                                <button type="submit" class="btn btn-default"><i class="fa fa-pencil"></i></button>
-                            </form>
-                            <form style="display:inline-block;" class="form-inline" action="posts/<%= post.id %>" method="GET" accept-charset="utf-8">
-                                <input type="hidden" name="post[delete]" value="true">
-                                <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button>
-                            </form>
+                            <p class="inline-block">
+                                <%= Date.parse(post.created_at).strftime("Posted on %B %e, %Y") %> &middot;
+                                    <a href="/posts/<%= post.id %>/comments">Comments</a>
+                            </p>
+                            <div class="float-right">
+                                <form style="display:inline-block;" action="/posts/<%= post.id %>/edit">
+                                    <button type="submit" class="btn btn-default"><i class="fa fa-pencil"></i></button>
+                                </form>
+                                <form style="display:inline-block;" class="form-inline" action="posts/<%= post.id %>" method="GET" accept-charset="utf-8">
+                                    <input type="hidden" name="post[delete]" value="true">
+                                    <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                     <hr>
