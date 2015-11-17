@@ -5,8 +5,9 @@ class PostsController < ControllerBase
   def create
     return patch if params['post']['edit']
     @post = Post.new(post_params)
-    @post.save
-    redirect_to('/')
+    # return value is post_id
+    post_id = @post.save
+    redirect_to("/posts/#{post_id}")
   end
 
   def index

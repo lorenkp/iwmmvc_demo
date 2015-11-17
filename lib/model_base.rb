@@ -1,6 +1,5 @@
 require 'pg'
 require 'active_support/inflector'
-require 'pry-byebug'
 require_relative 'associatable'
 
 # Database = PG::Connection.open(:dbname => 'mvc')
