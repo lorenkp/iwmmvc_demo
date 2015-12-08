@@ -5,10 +5,10 @@ require_relative 'associatable'
 # Database = PG::Connection.open(:dbname => 'mvc')
 
 Database = PG::Connection.open(host: 'ec2-107-21-221-59.compute-1.amazonaws.com',
-                               database: 'de8khgpvn6f9e',
                                port: 5432,
-                               password: 'KtENQfogvyPRDC-IdkfzSgVnRC',
-                               user: 'ddgdbhyinirsoj'
+                               dbname: 'de8khgpvn6f9e',
+                               user: 'ddgdbhyinirsoj',
+                               password: 'KtENQfogvyPRDC-IdkfzSgVnRC'
                               )
 
 class ModelBase
